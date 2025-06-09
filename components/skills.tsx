@@ -62,7 +62,7 @@ const skills = {
 
 export default function SkillsGrid() {
   return (
-    <section id="skills" className="section-padding bg-[#0d1117] text-white">
+    <section id="skills" className="section-padding bg-[#111827] text-white">
       <div className="container-section">
         <h2 className="heading-lg text-center mb-16">Habilidades Técnicas</h2>
 

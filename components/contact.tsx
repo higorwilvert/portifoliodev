@@ -32,7 +32,7 @@ const contactInfo = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="section-padding">
+    <section id="contact" className="section-padding bg-[#111827]">
       <div className="container-section">
         <h2 className="heading-lg text-center mb-16 reveal">Contato</h2>
 
@@ -46,7 +46,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col items-center p-6 bg-[#1a2540] rounded-xl hover:bg-[#243050] transition-colors reveal"
+              className="flex flex-col items-center p-6 bg-[#192339] rounded-xl hover:bg-[#243050] transition-colors reveal"
             >
               <div className="p-3 bg-white/10 rounded-full mb-4">{contact.icon}</div>
               <h3 className="text-sm uppercase tracking-wider text-white/60 mb-1">{contact.label}</h3>
