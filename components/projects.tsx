@@ -6,12 +6,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const projects = [
   {
-    title: "CRUD de Pets",
+    title: "Talk Language",
     description:
-      "Sistema completo para cadastro e gerenciamento de pets com autenticação de usuários e consultas em tempo real.",
-    technologies: ["React", "Node.js", "GraphQL"],
-    features: ["Cadastro de pets", "Autenticação", "Consultas em tempo real"],
-    image: "/placeholder.svg?height=300&width=500",
+    "Um sitema para aprendizado de diversas línguas estrangeiras de maneira gamificada ",
+    technologies: ["React", "Node.js"],
+    features: ["Cadastro de usuário", "Exercícios de vocabulário", "Progressos Monitorado", "Gamificação"],
+    image: "/talklanguage.png?height=300&width=500",
   },
   {
     title: "CRUD de Passagens",
