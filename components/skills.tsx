@@ -1,60 +1,84 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Code, Database, GitBranch, Terminal } from "lucide-react"
+import {
+  SiReact,
+  SiNextdotjs,
+  SiJavascript,
+  SiTypescript,
+  SiHtml5,
+  SiCss3,
+  SiTailwindcss,
+  SiBootstrap,
+  SiShadcnui,
+  SiNodedotjs,
+  SiSequelize,
+  SiPostgresql,
+  SiMysql,
+  SiOracle,
+  SiPostman,
+  SiGraphql,
+  SiFirebase,
+  SiGithub,
+  SiGit,
+  SiFigma,
+  SiGimp,
+  SiLinux,
+  SiInsomnia,
+  SiSwift,
+  SiPrisma,
+} from "react-icons/si"
+import { FaDatabase, FaPlug } from "react-icons/fa"
 
-const skillCategories = [
-  {
-    title: "Linguagens",
-    icon: <Code size={24} />,
-    skills: ["C++", "JavaScript", "Swift"],
-  },
-  {
-    title: "Frameworks",
-    icon: <Terminal size={24} />,
-    skills: ["Qt", "React", "SwiftUI", "Node.js"],
-  },
-  {
-    title: "Banco de Dados",
-    icon: <Database size={24} />,
-    skills: ["SQL Server", "PostgreSQL", "MySQL"],
-  },
-  {
-    title: "Outros",
-    icon: <GitBranch size={24} />,
-    skills: ["Git", "Linux", "Node-RED", "Postman"],
-  },
-]
+const skills = {
+  "Front-End": [
+    { name: "React", icon: <SiReact /> },
+    { name: "Next.js", icon: <SiNextdotjs /> },
+    { name: "JavaScript", icon: <SiJavascript /> },
+    { name: "HTML5", icon: <SiHtml5 /> },
+    { name: "CSS3", icon: <SiCss3 /> },
+    { name: "TailwindCSS", icon: <SiTailwindcss /> },
+    { name: "Shadcn", icon: <SiShadcnui /> },
+    { name: "Swift / SwiftUI", icon: <SiSwift /> },
+  ],
+  "Back-End": [
+    { name: "Node.js", icon: <SiNodedotjs /> },
+    { name: "Sequelize", icon: <SiSequelize /> },
+    { name: "PostgreSQL", icon: <SiPostgresql /> },
+    { name: "MySQL", icon: <SiMysql /> },
+    { name: "Oracle", icon: <SiOracle /> },
+    { name: "Prisma", icon: <SiPrisma /> },
+    { name: "Postman", icon: <SiPostman /> },
+    { name: "REST API", icon: <FaDatabase /> },
+  ],
+  "Others": [
+    { name: "Gimp", icon: <SiGimp /> },
+    { name: "Linux", icon: <SiLinux /> },
+    { name: "Git", icon: <SiGit /> },
+    { name: "GitHub", icon: <SiGithub /> },
+    { name: "Insomnia", icon: <SiInsomnia /> },
+    { name: "Figma", icon: <SiFigma /> },
+  ],
+}
 
-export default function Skills() {
+export default function SkillsGrid() {
   return (
-    <section id="skills" className="section-padding bg-[#111827]">
+    <section id="skills" className="section-padding bg-[#0d1117] text-white">
       <div className="container-section">
-        <h2 className="heading-lg text-center mb-16 reveal">Habilidades Técnicas</h2>
+        <h2 className="heading-lg text-center mb-16">Habilidades Técnicas</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-[#1a2540] rounded-xl p-6 reveal"
-            >
-              <div className="flex items-center mb-4">
-                <div className="p-2 bg-white/10 rounded-lg mr-3">{category.icon}</div>
-                <h3 className="text-xl font-bold">{category.title}</h3>
-              </div>
-
-              <ul className="space-y-2">
-                {category.skills.map((skill) => (
-                  <li key={skill} className="flex items-center text-white/80">
-                    <span className="w-2 h-2 bg-white rounded-full mr-2"></span>
-                    {skill}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {Object.entries(skills).map(([category, techs]) => (
+            <div key={category} className="bg-[#161b22] rounded-xl p-6 border border-white/10">
+              <h3 className="text-xl font-bold mb-4">{category}</h3>
+              <ul className="space-y-3">
+                {techs.map(({ name, icon }) => (
+                  <li key={name} className="flex items-center space-x-3">
+                    <span className="text-xl">{icon}</span>
+                    <span>{name}</span>
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
