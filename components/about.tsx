@@ -9,18 +9,15 @@ export default function About() {
 
           <div className="space-y-6 text-lg text-white/80">
             <p className="reveal">
-              Sou um desenvolvedor com experiência prática em aplicações web e desktop, usando C++, React e tecnologias
-              modernas.
+              Sou desenvolvedor com experiência prática na criação de aplicações web, utilizando React e tecnologias modernas do ecossistema JavaScript.
             </p>
 
             <p className="reveal stagger-delay-1">
-              Atuo principalmente na criação de soluções inteligentes e performáticas, com foco na experiência do
-              usuário e otimização de bancos de dados.
+              Tenho como foco principal o desenvolvimento de soluções eficientes, com interfaces intuitivas, boa performance e atenção especial à experiência do usuário e à estrutura dos dados.
             </p>
 
             <p className="reveal stagger-delay-2">
-              Tenho interesse crescente em desenvolvimento full stack com Node.js, e busco evoluir constantemente como
-              profissional de tecnologia.
+              Estou em constante evolução como profissional, com grande interesse em desenvolvimento full stack com Node.js e na construção de produtos robustos e escaláveis.
             </p>
           </div>
         </div>

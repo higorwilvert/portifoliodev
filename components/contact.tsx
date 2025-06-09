@@ -26,7 +26,7 @@ const contactInfo = [
     icon: <Linkedin size={24} />,
     label: "LinkedIn",
     value: "LinkedIn",
-    href: "https://linkedin.com/in/higorwilvert",
+    href: "https://www.linkedin.com/in/higor-wilvert-a3b382257/",
   },
 ]
 

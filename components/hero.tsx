@@ -29,7 +29,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg md:text-xl text-white/80 mb-4"
         >
-          Olá, eu sou
+          Prazer, eu sou
         </motion.p>
 
         <motion.h1
@@ -47,7 +47,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-xl md:text-2xl lg:text-3xl text-white/90 max-w-3xl mx-auto mb-10"
         >
-          Desenvolvedor focado em soluções eficientes e interfaces modernas
+          Desenvolvedor front-end com foco em performance, usabilidade e código limpo.
         </motion.p>
 
         <motion.div
