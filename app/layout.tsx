@@ -8,7 +8,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Higor Wilvert | Desenvolvedor",
   description: "Desenvolvedor focado em soluções eficientes e interfaces modernas",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
