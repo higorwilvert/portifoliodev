@@ -78,7 +78,7 @@ const Experience = () => {
                     index % 2 === 0 ? "md:mr-[50%] md:pr-8" : "md:ml-[50%] md:pl-8"
                   }`}
                 >
-                  <div className="bg-[#161b22] border border-gray-700 rounded-lg p-6">
+                  <div className="bg-[#1a2540] border border-gray-700 rounded-lg p-6">
                     <h3 className="text-xl font-bold mb-1">{exp.title}</h3>
                     <p className="text-blue-400 mb-1">{exp.company}</p>
                     <p className="text-sm text-gray-400 mb-4">{exp.period}</p>
@@ -119,16 +119,6 @@ const Experience = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="mt-20 text-center">
-          <button
-            onClick={() => window.open("https://www.linkedin.com/in/higor-wilvert-a3b382257/", "_blank")}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#161b22] border border-gray-600 hover:bg-gray-800 transition-colors"
-          >
-            <FaInfoCircle className="w-4 h-4" />
-            <span>Veja mais no meu LinkedIn</span>
-          </button>
         </div>
       </div>
     </section>
