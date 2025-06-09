@@ -8,6 +8,7 @@ import Projects from "@/components/projects"
 import Skills from "@/components/skills"
 import Contact from "@/components/contact"
 import Footer from "@/components/footer"
+import Experience from "@/components/experience"
 
 export default function Home() {
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function Home() {
       <About />
       <Projects />
       <Skills />
+      <Experience />
       <Contact />
       <Footer />
     </main>
