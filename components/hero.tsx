@@ -33,7 +33,7 @@ export default function Hero() {
         className="text-center px-4"
       >
         <motion.div variants={itemVariants} className="mb-6 flex justify-center">
-          <div className="bg-[#e8e4e6] border-[3px] rounded-lg shadow-lg p-4 w-[220px] transform transition-transform hover:scale-105 hover:-rotate-2">
+          <div className="bg-[#e8e4e6] rounded-lg shadow-lg p-4 w-[220px] transform transition-transform hover:scale-105 hover:-rotate-2">
             <div className="overflow-hidden rounded-md">
               <Image
                 src="/euu.jpg"
@@ -43,7 +43,7 @@ export default function Hero() {
                 className="w-full h-auto object-cover"
               />
             </div>
-            <p className="mt-6">
+            <p className="mt-8">
             </p>
           </div>
         </motion.div>
@@ -69,7 +69,7 @@ export default function Hero() {
         <motion.div variants={itemVariants}>
           <Link
             href="#projects"
-            className="inline-block px-6 py-3 rounded-lg text-white bg-[#1a2540] hover:bg-[#3b82f6] transition-colors"
+            className="inline-block px-6 py-3 rounded-lg text-white bg-[#1a2540] hover:bg-[#243050] transition-colors"
           >
             Ver projetos
           </Link>
