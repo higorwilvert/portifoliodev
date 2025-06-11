@@ -11,6 +11,7 @@ const navItems = [
   { name: "Sobre", href: "#about" },
   { name: "Projetos", href: "#projects" },
   { name: "Habilidades", href: "#skills" },
+  { name: "Experiência", href: "#experience" },
   { name: "Contato", href: "#contact" },
 ]
 
@@ -36,21 +37,21 @@ export default function Header() {
       <div className="container-section flex items-center justify-between">
         <Link href="#home" className="flex items-center">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo_fundo_personalizado-8TfKCqvMZMUq5kJJeeB3p1z115qW2e.png"
+            src="/LogoHWBranco.png"
             alt="Higor Wilvert Logo"
-            width={40}
-            height={40}
-            className="transition-transform hover:scale-110"
+            width={50}
+            height={50}
+            className="transition-transform hover:scale-110 rounded-full"
           />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item, i) => (
+          {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-white/80 hover:text-white transition-colors"
+              className="relative text-sm font-medium text-white transition-colors duration-200 before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-0 before:bg-white before:transition-all before:duration-300 hover:before:w-full"
             >
               {item.name}
             </Link>
@@ -80,7 +81,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="px-6 py-3 text-white/80 hover:text-white hover:bg-white/5"
+                className="px-6 py-3 text-white/80 transition-colors hover:text-white hover:bg-white/10"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
