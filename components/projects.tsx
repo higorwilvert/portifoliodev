@@ -15,7 +15,7 @@ const projects = [
   },
   {
     title: "Loopin",
-    description: "Aplicação desktop para gerenciamento assinaturas e gastos fixos com uma interface simples, elegante e com insights úteis.",
+    description: "Sistema para gerenciamento assinaturas e gastos fixos com uma interface elegante e com insights úteis.",
     technologies: ["Coming soon"],
     features: ["Controle de assinaturas", "Dashboard", "Filtros de gastos", "Exportação de dados"],
     image: "/loopin.png",
