@@ -14,18 +14,18 @@ const projects = [
     image: "/talklanguage.png?height=300&width=500",
   },
   {
-    title: "CRUD de Passagens",
-    description: "Aplicação desktop para gerenciamento completo de passagens com integração com banco de dados.",
-    technologies: ["C++", "MySQL"],
-    features: ["Desktop app", "Operações completas", "Integração com banco"],
-    image: "/placeholder.svg?height=300&width=500",
+    title: "Loopin",
+    description: "Aplicação desktop para gerenciamento assinaturas e gastos fixos com uma interface simples, elegante e com insights úteis.",
+    technologies: ["Coming soon"],
+    features: ["Controle de assinaturas", "Dashboard", "Filtros de gastos", "Exportação de dados"],
+    image: "/loopin.png",
   },
   {
-    title: "Mãozinha App",
+    title: "Mãozinha",
     description: "Aplicativo para gestão de ONGs com sistema de notificações e automações para melhorar a eficiência.",
     technologies: ["Swift", "Node-RED"],
     features: ["Gestão de ONGs", "Notificações", "Automações"],
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/Maozinha.png",
   },
 ]
 
