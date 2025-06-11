@@ -32,14 +32,20 @@ export default function Hero() {
         animate="show"
         className="text-center px-4"
       >
-        <motion.div variants={itemVariants} className="mb-6">
-          <Image
-            src="/euu.jpg"
-            alt="Foto de Higor Wilvert"
-            width={180}
-            height={180}
-            className="mx-auto rounded-full"
-          />
+        <motion.div variants={itemVariants} className="mb-6 flex justify-center">
+          <div className="bg-[#e8e4e6] border-[3px] rounded-lg shadow-lg p-4 w-[220px] transform transition-transform hover:scale-105 hover:-rotate-2">
+            <div className="overflow-hidden rounded-md">
+              <Image
+                src="/euu.jpg"
+                alt="Foto de Higor Wilvert"
+                width={300}
+                height={300}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <p className="mt-6">
+            </p>
+          </div>
         </motion.div>
 
         <motion.p variants={itemVariants} className="text-lg text-white/70 mb-2">
@@ -48,7 +54,7 @@ export default function Hero() {
 
         <motion.h1
           variants={itemVariants}
-          className="text-4xl md:text-5xl font-extrabold mb-4 "
+          className="text-4xl md:text-5xl font-extrabold mb-4"
         >
           Higor Wilvert
         </motion.h1>
