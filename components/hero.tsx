@@ -24,7 +24,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center pt-16 text-white"
+      className="min-h-screen flex items-center justify-center pt-8 text-white"
     >
       <motion.div
         variants={containerVariants}
@@ -32,7 +32,10 @@ export default function Hero() {
         animate="show"
         className="text-center px-4"
       >
-        <motion.div variants={itemVariants} className="mb-6 flex justify-center">
+        <motion.div
+          variants={itemVariants}
+          className="mb-6 flex justify-center"
+        >
           <div className="bg-[#e8e4e6] rounded-lg shadow-lg p-4 w-[220px] transform transition-transform hover:scale-105 hover:-rotate-2">
             <div className="overflow-hidden rounded-md">
               <Image
@@ -43,12 +46,14 @@ export default function Hero() {
                 className="w-full h-auto object-cover"
               />
             </div>
-            <p className="mt-8">
-            </p>
+            <p className="mt-8"></p>
           </div>
         </motion.div>
 
-        <motion.p variants={itemVariants} className="text-lg text-white/70 mb-2">
+        <motion.p
+          variants={itemVariants}
+          className="text-lg text-white/70 mb-2"
+        >
           Prazer, eu sou
         </motion.p>
 
@@ -63,7 +68,8 @@ export default function Hero() {
           variants={itemVariants}
           className="text-xl md:text-2xl lg:text-3xl text-white/90 max-w-3xl mx-auto mb-10"
         >
-          Desenvolvedor full stack com foco em performance, usabilidade e código limpo.
+          Desenvolvedor full stack com foco em performance, usabilidade e código
+          limpo.
         </motion.p>
 
         <motion.div variants={itemVariants}>
