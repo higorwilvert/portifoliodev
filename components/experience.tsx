@@ -1,6 +1,11 @@
-import { FaBriefcase, FaInfoCircle, FaDatabase } from "react-icons/fa";
+import { FaBriefcase } from "react-icons/fa";
 import {
-  SiReact, SiNodedotjs, SiCplusplus, SiQt,
+  SiCplusplus,
+  SiMongodb,
+  SiNestjs,
+  SiNodedotjs,
+  SiQt,
+  SiReact,
 } from "react-icons/si";
 
 import { DiMsqlServer } from "react-icons/di";
@@ -8,9 +13,25 @@ import { DiMsqlServer } from "react-icons/di";
 const Experience = () => {
   const experiences = [
     {
+      title: "Desenvolvedor Back-End Junior",
+      company: "Epicora",
+      period: "07/2025 – Presente",
+      technologies: [
+        { name: "Nest.js", icon: <SiNestjs /> },
+        { name: "Node.js", icon: <SiNodedotjs /> },
+        { name: "MongoDB", icon: <SiMongodb /> },
+      ],
+      achievements: [
+        "Desenvolvimento de APIs RESTful utilizando Nest.js e Node.js.",
+        "Implementação de autenticação e autorização com JWT.",
+        "Criação de testes unitários e de integração para garantir a qualidade do código.",
+        "Colaboração com equipe de front-end para integração de serviços.",
+      ],
+    },
+    {
       title: "Desenvolvedor de Software Junior",
       company: "Gamatec",
-      period: "11/2024 – Presente",
+      period: "11/2024 – 07/2025",
       technologies: [
         { name: "Qt", icon: <SiQt /> },
         { name: "C++", icon: <SiCplusplus /> },
