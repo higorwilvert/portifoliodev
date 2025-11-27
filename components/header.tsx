@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 const navItems = [
   { name: "Início", href: "#home" },
@@ -31,36 +31,46 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300 ${
-        scrolled ? "bg-[#141E33]/90 backdrop-blur-md shadow-md" : "bg-transparent"
+        scrolled 
+          ? "bg-[#141E33]/95 backdrop-blur-lg shadow-lg border-b border-white/5" 
+          : "bg-transparent"
       }`}
     >
       <div className="container-section flex items-center justify-between">
-        <Link href="#home" className="flex items-center">
-          <Image
-            src="/LogoHWBranco.png"
-            alt="Higor Wilvert Logo"
-            width={50}
-            height={50}
-            className="transition-transform hover:scale-110 rounded-full"
-          />
+        <Link href="#home" className="flex items-center group">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
+            <Image
+              src="/LogoHWBranco.png"
+              alt="Higor Wilvert Logo"
+              width={50}
+              height={50}
+              className="relative transition-transform group-hover:scale-110 group-hover:rotate-6 rounded-full"
+            />
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-2">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="relative text-sm font-medium text-white transition-colors duration-200 before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-0 before:bg-white before:transition-all before:duration-300 hover:before:w-full"
+              className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/5 group"
             >
-              {item.name}
+              <span className="relative z-10">{item.name}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/10 group-hover:via-purple-500/10 group-hover:to-pink-500/10 rounded-lg transition-all duration-300"></span>
             </Link>
           ))}
         </nav>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white p-2"
+          className={`md:hidden p-2 rounded-lg transition-all ${
+            isMenuOpen 
+              ? "bg-white/10 text-white" 
+              : "text-white/80 hover:text-white hover:bg-white/5"
+          }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -74,18 +84,25 @@ export default function Header() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-[#141E33]/95 backdrop-blur-md shadow-lg"
+          className="md:hidden absolute top-full left-0 right-0 bg-[#141E33]/98 backdrop-blur-lg shadow-2xl border-b border-white/10"
         >
-          <nav className="flex flex-col py-4">
-            {navItems.map((item) => (
-              <Link
+          <nav className="flex flex-col py-2">
+            {navItems.map((item, index) => (
+              <motion.div
                 key={item.name}
-                href={item.href}
-                className="px-6 py-3 text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                onClick={() => setIsMenuOpen(false)}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                {item.name}
-              </Link>
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-3 px-6 py-3 mx-2 my-1 text-white/80 rounded-lg transition-all hover:text-white hover:bg-white/10"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <div className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                  {item.name}
+                </Link>
+              </motion.div>
             ))}
           </nav>
         </motion.div>

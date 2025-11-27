@@ -15,6 +15,73 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  body {
+    cursor: none;
+  }
+}
+
+/* Custom Cursor - Beautiful & Smooth */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3b82f6;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.2);
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%);
+  animation: pulse-cursor 2s ease-in-out infinite;
+}
+
+@keyframes pulse-cursor {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.custom-cursor.cursor-hover {
+  width: 60px;
+  height: 60px;
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #60a5fa;
+  border-width: 3px;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3);
+}
+
+.custom-cursor.cursor-click {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, #60a5fa 0%, #3b82f6 100%);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+}
+
+.custom-cursor-follower.follower-hover {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.15) 40%, transparent 70%);
 }
 
 @layer components {
@@ -51,6 +118,7 @@ body {
   }
 }
 
+/* Fade In Up Animation */
 .fade-in-up {
   animation: fadeInUp 0.8s ease forwards;
   opacity: 0;
@@ -67,6 +135,7 @@ body {
   }
 }
 
+/* Stagger Delays */
 .stagger-delay-1 {
   animation-delay: 0.1s;
 }
@@ -81,4 +150,152 @@ body {
 
 .stagger-delay-4 {
   animation-delay: 0.4s;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Float Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.reveal.fade-in-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom Scrollbar - Beautiful Design */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0e1a;
+  border-left: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 10px;
+  border: 2px solid #0a0e1a;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #0a0e1a;
+}
+
+/* Glass Morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Hide default cursor on links and buttons - apenas desktop */
+@media (min-width: 768px) {
+  a, button, .cursor-pointer {
+    cursor: none !important;
+  }
+
+  /* Smooth cursor transition */
+  * {
+    cursor: none !important;
+  }
 }
