@@ -10,9 +10,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#141E33",
-        foreground: "#ffffff",
-        accent: "#64ffda",
+        background: "#1A2744",
+        foreground: "#F5F0E6",
+        accent: "#C9A86C",
+        forest: "#1A3D1A",
+        fern: "#2D5A3D",
+        ivory: "#F5F0E6",
+        gold: "#C9A86C",
+        navy: "#1A2744",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

@@ -30,46 +30,51 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300 ${
+      className={`fixed left-0 right-0 top-0 z-50 border-b py-3 transition-all duration-300 ${
         scrolled 
-          ? "bg-[#141E33]/95 backdrop-blur-lg shadow-lg border-b border-white/5" 
-          : "bg-transparent"
+          ? "border-navy/10 bg-ivory/95 shadow-[0_10px_30px_rgba(26,39,68,0.08)] backdrop-blur-lg"
+          : "border-navy/10 bg-ivory"
       }`}
     >
       <div className="container-section flex items-center justify-between">
         <Link href="#home" className="flex items-center group">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-navy transition-transform duration-200 group-hover:-rotate-6">
             <Image
               src="/LogoHWBranco.png"
               alt="Higor Wilvert Logo"
-              width={50}
-              height={50}
-              className="relative transition-transform group-hover:scale-110 group-hover:rotate-6 rounded-full"
+              width={34}
+              height={34}
+              className="rounded-full"
             />
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-2">
+        <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="relative px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/5 group"
+              className="rounded-full px-4 py-2 text-sm font-medium text-navy/70 transition-colors hover:bg-navy/5 hover:text-forest"
             >
-              <span className="relative z-10">{item.name}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/10 group-hover:via-purple-500/10 group-hover:to-pink-500/10 rounded-lg transition-all duration-300"></span>
+              {item.name}
             </Link>
           ))}
         </nav>
 
+        <Link
+          href="#contact"
+          className="hidden rounded-full bg-forest px-5 py-2.5 text-sm font-semibold text-ivory transition-colors hover:bg-fern lg:inline-flex"
+        >
+          Vamos conversar
+        </Link>
+
         {/* Mobile Menu Button */}
         <button
-          className={`md:hidden p-2 rounded-lg transition-all ${
+          className={`rounded-full p-2 transition-colors md:hidden ${
             isMenuOpen 
-              ? "bg-white/10 text-white" 
-              : "text-white/80 hover:text-white hover:bg-white/5"
+              ? "bg-navy text-ivory"
+              : "text-navy hover:bg-navy/5"
           }`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
@@ -84,9 +89,9 @@ export default function Header() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-[#141E33]/98 backdrop-blur-lg shadow-2xl border-b border-white/10"
+          className="absolute left-0 right-0 top-full border-b border-navy/10 bg-ivory shadow-xl md:hidden"
         >
-          <nav className="flex flex-col py-2">
+          <nav className="flex flex-col px-3 py-3">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -96,10 +101,10 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-6 py-3 mx-2 my-1 text-white/80 rounded-lg transition-all hover:text-white hover:bg-white/10"
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-navy/75 transition-colors hover:bg-navy/5 hover:text-forest"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <div className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                  <div className="h-1.5 w-1.5 rounded-full bg-gold"></div>
                   {item.name}
                 </Link>
               </motion.div>

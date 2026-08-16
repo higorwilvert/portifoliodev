@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Code2, Database, Sparkles, Wrench } from "lucide-react"
+import { Code2, Database, Wrench } from "lucide-react"
+import type { ComponentType } from "react"
 import { FaDatabase } from "react-icons/fa"
 import {
   SiCss3,
@@ -24,148 +25,116 @@ import {
   SiSequelize,
   SiShadcnui,
   SiSwift,
-  SiTailwindcss
+  SiTailwindcss,
 } from "react-icons/si"
 
-const skills = {
-  "Back-End": {
-    icon: <Database className="w-6 h-6" />,
-    skills: [
-      { name: "Node.js", icon: <SiNodedotjs />, level: 100 },
-      { name: "Sequelize", icon: <SiSequelize />, level: 100 },
-      { name: "PostgreSQL", icon: <SiPostgresql />, level: 100 },
-      { name: "MySQL", icon: <SiMysql />, level: 100 },
-      { name: "Oracle", icon: <SiOracle />, level: 100 },
-      { name: "Prisma", icon: <SiPrisma />, level: 100 },
-      { name: "Postman", icon: <SiPostman />, level: 100 },
-      { name: "REST API", icon: <FaDatabase />, level: 100 },
+type SkillIcon = ComponentType<{ className?: string }>
+
+const skills: Array<{
+  title: string
+  description: string
+  icon: SkillIcon
+  items: Array<{ name: string; icon: SkillIcon }>
+}> = [
+  {
+    title: "Back-End",
+    description: "APIs, regras de negócio e dados.",
+    icon: Database,
+    items: [
+      { name: "Node.js", icon: SiNodedotjs },
+      { name: "Sequelize", icon: SiSequelize },
+      { name: "PostgreSQL", icon: SiPostgresql },
+      { name: "MySQL", icon: SiMysql },
+      { name: "Oracle", icon: SiOracle },
+      { name: "Prisma", icon: SiPrisma },
+      { name: "Postman", icon: SiPostman },
+      { name: "REST API", icon: FaDatabase },
     ],
   },
-  "Front-End": {
-    icon: <Code2 className="w-6 h-6" />,
-    skills: [
-      { name: "React", icon: <SiReact />, level: 90 },
-      { name: "Next.js", icon: <SiNextdotjs />, level: 85 },
-      { name: "JavaScript", icon: <SiJavascript />, level: 90 },
-      { name: "HTML5", icon: <SiHtml5 />, level: 95 },
-      { name: "CSS3", icon: <SiCss3 />, level: 90 },
-      { name: "TailwindCSS", icon: <SiTailwindcss />, level: 90 },
-      { name: "Shadcn", icon: <SiShadcnui />, level: 80 },
-      { name: "Swift / SwiftUI", icon: <SiSwift />, level: 75 },
+  {
+    title: "Front-End",
+    description: "Interfaces responsivas e acessíveis.",
+    icon: Code2,
+    items: [
+      { name: "React", icon: SiReact },
+      { name: "Next.js", icon: SiNextdotjs },
+      { name: "JavaScript", icon: SiJavascript },
+      { name: "HTML5", icon: SiHtml5 },
+      { name: "CSS3", icon: SiCss3 },
+      { name: "TailwindCSS", icon: SiTailwindcss },
+      { name: "Shadcn", icon: SiShadcnui },
+      { name: "Swift", icon: SiSwift },
     ],
   },
-  "Ferramentas": {
-    icon: <Wrench className="w-6 h-6" />,
-    skills: [
-      { name: "Git", icon: <SiGit />, level: 95 },
-      { name: "GitHub", icon: <SiGithub />, level: 95 },
-      { name: "Linux", icon: <SiLinux />, level: 90 },
-      { name: "Insomnia", icon: <SiInsomnia />, level: 90 },
-      { name: "Figma", icon: <SiFigma />, level: 75 },
-      { name: "Gimp", icon: <SiGimp />, level: 70 },
+  {
+    title: "Ferramentas",
+    description: "Fluxo, prototipação e qualidade.",
+    icon: Wrench,
+    items: [
+      { name: "Git", icon: SiGit },
+      { name: "GitHub", icon: SiGithub },
+      { name: "Linux", icon: SiLinux },
+      { name: "Insomnia", icon: SiInsomnia },
+      { name: "Figma", icon: SiFigma },
+      { name: "Gimp", icon: SiGimp },
     ],
   },
-}
+]
 
 export default function SkillsGrid() {
   return (
-    <section id="skills" className="section-padding bg-gradient-to-b from-[#111827] to-[#0f172a] text-white relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-
-      <div className="container-section relative z-10">
-        {/* Title */}
+    <section id="skills" className="section-padding bg-navy text-ivory">
+      <div className="container-section">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="grid gap-8 border-b border-ivory/15 pb-10 lg:grid-cols-2 lg:items-end"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-blue-500/10 border border-blue-500/30">
-            <Sparkles className="w-4 h-4 text-blue-400" />
-            <span className="text-sm font-medium text-blue-300">Tecnologias & Ferramentas</span>
+          <div>
+            <p className="eyebrow text-gold">Stack & ferramentas</p>
+            <h2 className="heading-lg">Tecnologia escolhida com propósito.</h2>
           </div>
-          <h2 className="heading-lg mb-4 text-white">
-            Habilidades Técnicas
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Especializado em Back-End com Node.js e bancos de dados
+          <p className="max-w-lg leading-relaxed text-ivory/60 lg:justify-self-end">
+            Minha base técnica combina desenvolvimento Back-End, interfaces modernas e ferramentas que mantêm o fluxo
+            de trabalho simples e confiável.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {Object.entries(skills).map(([category, data], categoryIndex) => (
-            <motion.div
-              key={category}
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          {skills.map((category, categoryIndex) => (
+            <motion.article
+              key={category.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: categoryIndex * 0.2 }}
+              transition={{ delay: categoryIndex * 0.08 }}
+              className="rounded-3xl border border-ivory/15 p-7 transition-colors hover:border-gold/50"
             >
-              <div className="bg-[#1a2540] border border-blue-500/20 rounded-2xl p-6 hover:border-blue-500/50 hover:bg-[#1f2d4d] transition-all h-full">
-                {/* Category Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 rounded-xl bg-blue-500">
-                    {data.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold">{category}</h3>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-2xl font-semibold">{category.title}</h3>
+                  <p className="mt-2 text-sm text-ivory/50">{category.description}</p>
                 </div>
-
-                {/* Skills List */}
-                <ul className="space-y-4">
-                  {data.skills.map(({ name, icon, level }, index) => (
-                    <motion.li
-                      key={name}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: categoryIndex * 0.2 + index * 0.05 }}
-                      className="group/item"
-                    >
-                      {/* Skill Name and Icon */}
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl transition-transform hover:scale-110">
-                            {icon}
-                          </span>
-                          <span className="font-medium text-gray-300">
-                            {name}
-                          </span>
-                        </div>
-                        <span className="text-xs text-gray-400 font-semibold">{level}%</span>
-                      </div>
-                      
-                      {/* Progress Bar */}
-                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: categoryIndex * 0.2 + index * 0.05 }}
-                          className="h-full bg-blue-500 rounded-full relative overflow-hidden"
-                        >
-                          <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
-                        </motion.div>
-                      </div>
-                    </motion.li>
-                  ))}
-                </ul>
+                <div className="rounded-full bg-gold p-3 text-navy">
+                  <category.icon className="h-5 w-5" />
+                </div>
               </div>
-            </motion.div>
+
+              <div className="mt-8 grid grid-cols-2 gap-2">
+                {category.items.map(({ name, icon: Icon }) => (
+                  <div
+                    key={name}
+                    className="flex items-center gap-2 rounded-xl bg-ivory/5 px-3 py-3 text-sm text-ivory/75"
+                  >
+                    <Icon className="h-4 w-4 shrink-0 text-gold" />
+                    <span>{name}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.article>
           ))}
         </div>
-
-        {/* Additional Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <p className="text-gray-400 text-sm">
-            Sempre aprendendo novas tecnologias e aprimorando minhas habilidades 🚀
-          </p>
-        </motion.div>
       </div>
     </section>
   )

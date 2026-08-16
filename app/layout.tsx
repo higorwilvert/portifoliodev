@@ -1,10 +1,6 @@
-import CustomCursor from "@/components/custom-cursor"
-import { Inter } from "next/font/google"
 import type { Metadata } from "next/types"
 import type React from "react"
 import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Higor Wilvert | Desenvolvedor",
@@ -24,10 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="scroll-smooth" >
-      <body className={`${inter.className} bg-[#141E33] text-white antialiased`}>
-        <CustomCursor />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
