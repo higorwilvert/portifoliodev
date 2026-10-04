@@ -1,103 +1,139 @@
-"use client"
-
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { ArrowUpRight, Check, Github } from "lucide-react";
+import Reveal from "./reveal";
+import ProjectVisual from "./project-visual";
+import TechTags from "./tech-tags";
+import { kiwi, socialLinks } from "@/lib/portfolio";
 
 const projects = [
   {
-    number: "01",
     title: "Talk Language",
-    description: "Uma plataforma gamificada para tornar o aprendizado de idiomas mais leve, claro e envolvente.",
+    category: "Aprendizado de idiomas",
+    description:
+      "Uma plataforma gamificada para tornar o aprendizado de idiomas mais leve e envolvente.",
     technologies: ["React", "Node.js"],
-    features: ["Cadastro de usuário", "Exercícios de vocabulário", "Progresso monitorado", "Gamificação"],
+    features: ["Exercícios de vocabulário", "Progresso e gamificação"],
     image: "/talklanguage.png",
   },
   {
-    number: "02",
     title: "Loopin",
-    description: "Sistema para organizar assinaturas e gastos fixos com uma experiência simples e insights úteis.",
-    technologies: ["Em desenvolvimento"],
-    features: ["Controle de assinaturas", "Dashboard", "Filtros de gastos", "Exportação de dados"],
+    category: "Em desenvolvimento",
+    description:
+      "Um lugar para organizar assinaturas e gastos fixos, entender suas despesas e planejar os próximos passos.",
+    technologies: ["Gestão de assinaturas"],
+    features: ["Dashboard de gastos", "Filtros e exportação"],
     image: "/loopin.png",
   },
   {
-    number: "03",
     title: "Mãozinha",
-    description: "Aplicativo para gestão de ONGs com notificações e automações que melhoram a operação diária.",
+    category: "Tecnologia para ONGs",
+    description:
+      "Aplicativo para facilitar a gestão de ONGs, com notificações e automações para o dia a dia.",
     technologies: ["Swift", "Node-RED"],
-    features: ["Gestão de ONGs", "Notificações", "Automações"],
+    features: ["Gestão de organizações", "Notificações e automações"],
     image: "/Maozinha.png",
   },
-]
+];
 
 export default function Projects() {
   return (
-    <section id="projects" className="section-padding bg-ivory">
-      <div className="container-section">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-14 flex flex-col justify-between gap-6 border-b border-navy/15 pb-9 md:flex-row md:items-end"
-        >
-          <div>
-            <p className="eyebrow text-fern">Projetos selecionados</p>
-            <h2 className="heading-lg max-w-2xl text-navy">Soluções pensadas do problema à entrega.</h2>
-          </div>
-          <p className="max-w-sm text-sm leading-relaxed text-navy/60">
-            Uma seleção de produtos que unem lógica, experiência e decisões técnicas bem fundamentadas.
+    <section
+      id="projects"
+      className="section-padding projects-section"
+      aria-labelledby="projects-title"
+    >
+      <div className="container-section projects-layout">
+        <div className="projects-heading">
+          <p className="section-label">Projetos selecionados</p>
+          <h2 id="projects-title" className="heading-lg">
+            Ideias que <br />
+            ganharam vida.
+          </h2>
+          <p>
+            Um pouco do que construo, das decisões que tomo e dos problemas que
+            gosto de resolver.
           </p>
-        </motion.div>
-
-        <div className="space-y-8">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              className="grid overflow-hidden rounded-3xl border border-navy/15 bg-ivory lg:grid-cols-[1.1fr_0.9fr]"
-            >
-              <div className={`relative min-h-72 bg-navy ${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                <Image
-                  src={project.image}
-                  alt={`Interface do projeto ${project.title}`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover transition-transform duration-500 hover:scale-[1.02]"
-                />
-              </div>
-
-              <div className="flex flex-col justify-between p-7 sm:p-10 lg:p-12">
-                <div>
-                  <div className="flex items-center justify-between border-b border-navy/10 pb-5">
-                    <span className="text-sm font-bold tracking-[0.18em] text-gold">{project.number}</span>
-                    <div className="flex flex-wrap justify-end gap-2">
-                      {project.technologies.map((tech) => (
-                        <span key={tech} className="rounded-full bg-forest/10 px-3 py-1 text-xs font-semibold text-forest">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <h3 className="mt-8 text-3xl font-semibold tracking-tight text-navy md:text-4xl">{project.title}</h3>
-                  <p className="mt-4 leading-relaxed text-navy/65">{project.description}</p>
+          <a
+            href={socialLinks.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-link"
+          >
+            Mais no GitHub
+            <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="projects-list">
+          <Reveal>
+            <article className="project-card featured-project" id="kiwi">
+              <ProjectVisual image={kiwi.image} title="Kiwi Play" featured />
+              <div className="project-content">
+                <div className="project-category">
+                  <span>{kiwi.category}</span>
+                  <span className="project-featured-label">Em destaque</span>
                 </div>
-
-                <ul className="mt-10 grid gap-3 sm:grid-cols-2">
-                  {project.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-sm text-navy/65">
-                      <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+                <h3>Kiwi Play</h3>
+                <p>{kiwi.description}</p>
+                <TechTags technologies={kiwi.technologies} />
+                <ul className="project-features">
+                  {[
+                    "Parceiros e partidas",
+                    "Rating e recomendações",
+                    "Aplicações web e mobile",
+                  ].map((feature) => (
+                    <li key={feature}>
+                      <Check size={15} aria-hidden="true" />
                       {feature}
                     </li>
                   ))}
                 </ul>
+                <div className="project-links">
+                  <a
+                    href={kiwi.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                  >
+                    Conhecer a Kiwi
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </a>
+                  {kiwi.repository && (
+                    <a
+                      href={kiwi.repository}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-link"
+                    >
+                      <Github size={16} aria-hidden="true" />
+                      Repositório
+                    </a>
+                  )}
+                </div>
               </div>
-            </motion.article>
+            </article>
+          </Reveal>
+          {projects.map((project) => (
+            <Reveal key={project.title}>
+              <article className="project-card">
+                <ProjectVisual image={project.image} title={project.title} />
+                <div className="project-content">
+                  <p className="project-category">{project.category}</p>
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <TechTags technologies={project.technologies} />
+                  <ul className="project-features">
+                    {project.features.map((feature) => (
+                      <li key={feature}>
+                        <Check size={15} aria-hidden="true" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,7 +1,13 @@
-'use client';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, extend, useFrame, type ThreeEvent } from '@react-three/fiber';
-import { useGLTF, useTexture, Environment, Html, Lightformer } from '@react-three/drei';
+"use client";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, extend, useFrame, type ThreeEvent } from "@react-three/fiber";
+import {
+  useGLTF,
+  useTexture,
+  Environment,
+  Html,
+  Lightformer,
+} from "@react-three/drei";
 import {
   BallCollider,
   CuboidCollider,
@@ -10,27 +16,27 @@ import {
   useRopeJoint,
   useSphericalJoint,
   type RapierRigidBody,
-  type RigidBodyProps
-} from '@react-three/rapier';
-import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
-import * as THREE from 'three';
+  type RigidBodyProps,
+} from "@react-three/rapier";
+import { MeshLineGeometry, MeshLineMaterial } from "meshline";
+import * as THREE from "three";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
-declare module '@react-three/fiber' {
+declare module "@react-three/fiber" {
   interface ThreeElements {
     meshLineGeometry: any;
     meshLineMaterial: any;
   }
 }
 
-const CARD_GLB = '/lanyard/card.glb';
-const DEFAULT_LANYARD = '/lanyard/lanyard.png';
+const CARD_GLB = "/lanyard/card.glb";
+const DEFAULT_LANYARD = "/lanyard/lanyard.png";
 
 // 1x1 transparent pixel — lets useTexture be called unconditionally when a
 // front/back image isn't supplied.
 const BLANK_PIXEL =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 
 // The card model's front face is UV-mapped to the LEFT half of the texture
 // atlas and the back face to the RIGHT half (measured from card.glb). Each
@@ -53,13 +59,14 @@ interface LanyardProps {
   transparent?: boolean;
   frontImage?: string | null;
   backImage?: string | null;
-  imageFit?: 'cover' | 'contain';
+  imageFit?: "cover" | "contain";
   lanyardImage?: string | null;
   lanyardWidth?: number;
   cardScale?: number;
   ropeLength?: number;
   anchorPosition?: [number, number, number];
   badgeProfile?: BadgeProfile | null;
+  active?: boolean;
 }
 
 export default function Lanyard({
@@ -69,28 +76,39 @@ export default function Lanyard({
   transparent = true,
   frontImage = null,
   backImage = null,
-  imageFit = 'cover',
+  imageFit = "cover",
   lanyardImage = null,
   lanyardWidth = 1,
   cardScale = 2.25,
   ropeLength = 1,
   anchorPosition = [0, 4, 0],
-  badgeProfile = null
+  badgeProfile = null,
+  active = true,
 }: LanyardProps) {
-  const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState<boolean>(
+    () => typeof window !== "undefined" && window.innerWidth < 768,
+  );
 
   useEffect(() => {
     const handleResize = (): void => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div className="lanyard-wrapper" aria-label="Crachá 3D interativo de Higor Wilvert">
+    <div
+      className="lanyard-wrapper"
+      aria-label="Crachá 3D interativo de Higor Wilvert"
+    >
       <Canvas
         camera={{ position, fov }}
-        dpr={isMobile ? [1.25, 1.75] : [1.5, 2]}
-        gl={{ alpha: transparent, antialias: true, powerPreference: 'high-performance' }}
+        dpr={isMobile ? [1, 1.5] : [1, 1.75]}
+        frameloop={active ? "always" : "never"}
+        gl={{
+          alpha: transparent,
+          antialias: true,
+          powerPreference: "high-performance",
+        }}
         onCreated={({ gl }) => {
           gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
           gl.toneMappingExposure = 0.85;
@@ -106,7 +124,11 @@ export default function Lanyard({
             </Html>
           }
         >
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+          <Physics
+            gravity={gravity}
+            paused={!active}
+            timeStep={isMobile ? 1 / 30 : 1 / 60}
+          >
             <Band
               isMobile={isMobile}
               frontImage={frontImage}
@@ -123,28 +145,28 @@ export default function Lanyard({
           <Environment blur={0.75}>
             <Lightformer
               intensity={1.15}
-              color="#f5f0e6"
+              color="#f5f6fa"
               position={[0, -1, 5]}
               rotation={[0, 0, Math.PI / 3]}
               scale={[100, 0.1, 1]}
             />
             <Lightformer
               intensity={0.45}
-              color="#f5f0e6"
+              color="#f5f6fa"
               position={[-1, -1, 1]}
               rotation={[0, 0, Math.PI / 3]}
               scale={[100, 0.1, 1]}
             />
             <Lightformer
               intensity={0.65}
-              color="#c9a86c"
+              color="#dce4f4"
               position={[1, 1, 1]}
               rotation={[0, 0, Math.PI / 3]}
               scale={[100, 0.1, 1]}
             />
             <Lightformer
               intensity={1.35}
-              color="#f5f0e6"
+              color="#f5f6fa"
               position={[-10, 0, 14]}
               rotation={[0, Math.PI / 2, Math.PI / 3]}
               scale={[100, 10, 1]}
@@ -162,7 +184,7 @@ interface BandProps {
   isMobile?: boolean;
   frontImage?: string | null;
   backImage?: string | null;
-  imageFit?: 'cover' | 'contain';
+  imageFit?: "cover" | "contain";
   lanyardImage?: string | null;
   lanyardWidth?: number;
   cardScale?: number;
@@ -181,15 +203,20 @@ function Band({
   isMobile = false,
   frontImage = null,
   backImage = null,
-  imageFit = 'cover',
+  imageFit = "cover",
   lanyardImage = null,
   lanyardWidth = 1,
   cardScale = 2.25,
   ropeLength = 1,
   anchorPosition = [0, 4, 0],
-  badgeProfile = null
+  badgeProfile = null,
 }: BandProps) {
-  const band = useRef<THREE.Mesh<InstanceType<typeof MeshLineGeometry>, InstanceType<typeof MeshLineMaterial>>>(null!);
+  const band = useRef<
+    THREE.Mesh<
+      InstanceType<typeof MeshLineGeometry>,
+      InstanceType<typeof MeshLineMaterial>
+    >
+  >(null!);
   const fixed = useRef<RapierRigidBody>(null!);
   const j1 = useRef<LanyardRigidBody>(null!);
   const j2 = useRef<LanyardRigidBody>(null!);
@@ -208,11 +235,11 @@ function Band({
   const dir = new THREE.Vector3();
 
   const segmentProps: RigidBodyProps = {
-    type: 'dynamic',
+    type: "dynamic",
     canSleep: true,
     colliders: false,
     angularDamping: 4,
-    linearDamping: 4
+    linearDamping: 4,
   };
 
   const getLerped = (body: LanyardRigidBody): THREE.Vector3 => {
@@ -239,10 +266,10 @@ function Band({
     const baseImg = baseMap.image as any;
     const W = baseImg.width;
     const H = baseImg.height;
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = W;
     canvas.height = H;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return baseMap;
     // Keep the original baked atlas for the card edges and any untouched face.
     ctx.drawImage(baseImg, 0, 0, W, H);
@@ -252,7 +279,7 @@ function Band({
       const ry = rect.y * H;
       const rw = rect.w * W;
       const rh = rect.h * H;
-      const pick = imageFit === 'contain' ? Math.min : Math.max;
+      const pick = imageFit === "contain" ? Math.min : Math.max;
       const scale = pick(rw / img.width, rh / img.height);
       const dw = img.width * scale;
       const dh = img.height * scale;
@@ -276,12 +303,17 @@ function Band({
       const photoHeight = rh * 0.55;
       const infoY = photoY + photoHeight;
 
-      ctx.fillStyle = '#f5f0e6';
+      ctx.fillStyle = "#f5f6fa";
       ctx.fillRect(rx, ry, rw, rh);
-      ctx.fillStyle = '#1a3d1a';
+      ctx.fillStyle = "#151c31";
       ctx.fillRect(rx, ry, rw, headerHeight);
-      ctx.fillStyle = '#c9a86c';
-      ctx.fillRect(rx, ry + headerHeight - Math.max(4, rh * 0.009), rw, Math.max(4, rh * 0.009));
+      ctx.fillStyle = "#dce4f4";
+      ctx.fillRect(
+        rx,
+        ry + headerHeight - Math.max(4, rh * 0.009),
+        rw,
+        Math.max(4, rh * 0.009),
+      );
 
       ctx.save();
       ctx.beginPath();
@@ -295,34 +327,54 @@ function Band({
         rx + (rw - photoWidth) / 2,
         photoY + (photoHeight - fittedHeight) / 2,
         photoWidth,
-        fittedHeight
+        fittedHeight,
       );
       ctx.restore();
 
-      ctx.fillStyle = '#f5f0e6';
+      ctx.fillStyle = "#f5f6fa";
       ctx.fillRect(rx, infoY, rw, ry + rh - infoY);
-      ctx.fillStyle = '#c9a86c';
+      ctx.fillStyle = "#dce4f4";
       ctx.fillRect(rx, infoY, rw, Math.max(5, rh * 0.012));
 
       const padding = rw * 0.075;
-      ctx.textBaseline = 'middle';
-      ctx.textAlign = 'left';
-      ctx.fillStyle = '#f5f0e6';
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#f5f6fa";
       ctx.font = `700 ${Math.round(rh * 0.032)}px Arial, sans-serif`;
-      ctx.fillText(profile.mark || 'HW / PORTFOLIO', rx + padding, ry + headerHeight * 0.48, rw - padding * 2);
+      ctx.fillText(
+        profile.mark || "HW / PORTFOLIO",
+        rx + padding,
+        ry + headerHeight * 0.48,
+        rw - padding * 2,
+      );
 
-      ctx.fillStyle = '#1a2744';
+      ctx.fillStyle = "#151c31";
       ctx.font = `700 ${Math.round(rh * 0.057)}px Arial, sans-serif`;
-      ctx.fillText(profile.name.toUpperCase(), rx + padding, infoY + rh * 0.105, rw - padding * 2);
-      ctx.fillStyle = '#2d5a3d';
+      ctx.fillText(
+        profile.name.toUpperCase(),
+        rx + padding,
+        infoY + rh * 0.105,
+        rw - padding * 2,
+      );
+      ctx.fillStyle = "#151c31";
       ctx.font = `600 ${Math.round(rh * 0.03)}px Arial, sans-serif`;
-      ctx.fillText(profile.role.toUpperCase(), rx + padding, infoY + rh * 0.17, rw - padding * 2);
+      ctx.fillText(
+        profile.role.toUpperCase(),
+        rx + padding,
+        infoY + rh * 0.17,
+        rw - padding * 2,
+      );
 
       if (profile.detail) {
-        ctx.fillStyle = '#1a2744';
+        ctx.fillStyle = "#151c31";
         ctx.globalAlpha = 0.62;
         ctx.font = `500 ${Math.round(rh * 0.023)}px Arial, sans-serif`;
-        ctx.fillText(profile.detail, rx + padding, infoY + rh * 0.225, rw - padding * 2);
+        ctx.fillText(
+          profile.detail,
+          rx + padding,
+          infoY + rh * 0.225,
+          rw - padding * 2,
+        );
         ctx.globalAlpha = 1;
       }
 
@@ -330,29 +382,45 @@ function Band({
       const by = BACK_UV_RECT.y * H;
       const bw = BACK_UV_RECT.w * W;
       const bh = BACK_UV_RECT.h * H;
-      ctx.fillStyle = '#1a2744';
+      ctx.fillStyle = "#151c31";
       ctx.fillRect(bx, by, bw, bh);
-      ctx.fillStyle = '#c9a86c';
+      ctx.fillStyle = "#dce4f4";
       ctx.fillRect(bx, by, Math.max(8, bw * 0.025), bh);
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#f5f0e6';
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#f5f6fa";
       ctx.font = `700 ${Math.round(bh * 0.17)}px Arial, sans-serif`;
-      ctx.fillText('HW', bx + bw / 2, by + bh * 0.42);
-      ctx.fillStyle = '#c9a86c';
-      ctx.fillRect(bx + bw * 0.2, by + bh * 0.52, bw * 0.6, Math.max(5, bh * 0.009));
-      ctx.fillStyle = '#f5f0e6';
+      ctx.fillText("HW", bx + bw / 2, by + bh * 0.42);
+      ctx.fillStyle = "#dce4f4";
+      ctx.fillRect(
+        bx + bw * 0.2,
+        by + bh * 0.52,
+        bw * 0.6,
+        Math.max(5, bh * 0.009),
+      );
+      ctx.fillStyle = "#f5f6fa";
       ctx.font = `600 ${Math.round(bh * 0.035)}px Arial, sans-serif`;
-      ctx.fillText('DESENVOLVEDOR FULL STACK', bx + bw / 2, by + bh * 0.61, bw * 0.8);
+      ctx.fillText(
+        profile.role.toUpperCase(),
+        bx + bw / 2,
+        by + bh * 0.61,
+        bw * 0.8,
+      );
       ctx.globalAlpha = 0.65;
       ctx.font = `500 ${Math.round(bh * 0.026)}px Arial, sans-serif`;
-      ctx.fillText('higorwilvert.dev', bx + bw / 2, by + bh * 0.7, bw * 0.8);
+      ctx.fillText(
+        "github.com/higorwilvert",
+        bx + bw / 2,
+        by + bh * 0.7,
+        bw * 0.8,
+      );
       ctx.globalAlpha = 1;
     };
 
     if (badgeProfile && frontTex.image) {
       drawProfileBadge(frontTex.image, badgeProfile);
     } else {
-      if (frontImage && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
+      if (frontImage && frontTex.image)
+        drawFitted(frontTex.image, FRONT_UV_RECT);
       if (backImage && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
     }
 
@@ -365,10 +433,23 @@ function Band({
     composite.magFilter = THREE.LinearFilter;
     composite.needsUpdate = true;
     return composite;
-  }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map, badgeProfile]);
+  }, [
+    frontImage,
+    backImage,
+    imageFit,
+    frontTex,
+    backTex,
+    materials.base.map,
+    badgeProfile,
+  ]);
   const [curve] = useState(
     () =>
-      new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
+      new THREE.CatmullRomCurve3([
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+        new THREE.Vector3(),
+      ]),
   );
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
@@ -378,35 +459,44 @@ function Band({
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], ropeLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, cardJointY, 0]
+    [0, cardJointY, 0],
   ]);
 
   useEffect(() => {
     if (hovered) {
-      document.body.style.cursor = dragged ? 'grabbing' : 'grab';
+      document.body.style.cursor = dragged ? "grabbing" : "grab";
       return () => {
-        document.body.style.cursor = 'auto';
+        document.body.style.cursor = "auto";
       };
     }
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
-    if (dragged && typeof dragged !== 'boolean') {
+    if (dragged && typeof dragged !== "boolean") {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
       vec.add(dir.multiplyScalar(state.camera.position.length()));
-      [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
+      [card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp());
       card.current?.setNextKinematicTranslation({
         x: vec.x - dragged.x,
         y: vec.y - dragged.y,
-        z: vec.z - dragged.z
+        z: vec.z - dragged.z,
       });
     }
     if (fixed.current) {
-      [j1, j2].forEach(ref => {
+      [j1, j2].forEach((ref) => {
         const lerped = getLerped(ref.current);
-        const clampedDistance = Math.max(0.1, Math.min(1, lerped.distanceTo(ref.current.translation())));
-        lerped.lerp(ref.current.translation(), delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)));
+        const clampedDistance = Math.max(
+          0.1,
+          Math.min(1, lerped.distanceTo(ref.current.translation())),
+        );
+        lerped.lerp(
+          ref.current.translation(),
+          Math.min(
+            1,
+            delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
+          ),
+        );
       });
       curve.points[0].copy(j3.current.translation());
       curve.points[1].copy(getLerped(j2.current));
@@ -415,45 +505,72 @@ function Band({
       band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true);
+      card.current.setAngvel(
+        { x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z },
+        true,
+      );
     }
   });
 
-  curve.curveType = 'chordal';
+  curve.curveType = "chordal";
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
   return (
     <>
       <group position={anchorPosition}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[chainStep, 0, 0]} ref={j1} {...segmentProps} type="dynamic">
+        <RigidBody
+          position={[chainStep, 0, 0]}
+          ref={j1}
+          {...segmentProps}
+          type="dynamic"
+        >
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[chainStep * 2, 0, 0]} ref={j2} {...segmentProps} type="dynamic">
+        <RigidBody
+          position={[chainStep * 2, 0, 0]}
+          ref={j2}
+          {...segmentProps}
+          type="dynamic"
+        >
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[chainStep * 3, 0, 0]} ref={j3} {...segmentProps} type="dynamic">
+        <RigidBody
+          position={[chainStep * 3, 0, 0]}
+          ref={j3}
+          {...segmentProps}
+          type="dynamic"
+        >
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
           position={[chainStep * 3, -cardJointY, 0]}
           ref={card}
           {...segmentProps}
-          type={dragged ? 'kinematicPosition' : 'dynamic'}
+          type={dragged ? "kinematicPosition" : "dynamic"}
         >
           <CuboidCollider args={[cardHalfWidth, cardHalfHeight, 0.02]} />
           <group
             scale={cardScale}
             position={[0, cardVisualOffsetY, -0.05]}
-            onPointerOver={() => hover(true)}
+            onPointerOver={(e: ThreeEvent<PointerEvent>) => {
+              if (!isMobile && e.pointerType !== "touch") hover(true);
+            }}
             onPointerOut={() => hover(false)}
             onPointerUp={(e: ThreeEvent<PointerEvent>) => {
+              if (isMobile || !dragged) return;
               (e.target as Element).releasePointerCapture(e.pointerId);
               drag(false);
             }}
+            onPointerCancel={() => drag(false)}
             onPointerDown={(e: ThreeEvent<PointerEvent>) => {
+              if (isMobile || dragged || e.pointerType === "touch") return;
               (e.target as Element).setPointerCapture(e.pointerId);
-              drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())));
+              drag(
+                new THREE.Vector3()
+                  .copy(e.point)
+                  .sub(vec.copy(card.current.translation())),
+              );
             }}
           >
             <mesh geometry={nodes.card.geometry}>
@@ -470,7 +587,11 @@ function Band({
                 envMapIntensity={0.4}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+            <mesh
+              geometry={nodes.clip.geometry}
+              material={materials.metal}
+              material-roughness={0.3}
+            />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
@@ -478,7 +599,7 @@ function Band({
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
-          color="#f5f0e6"
+          color="#f5f6fa"
           depthTest={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
           useMap

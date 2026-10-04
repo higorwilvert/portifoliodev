@@ -1,149 +1,117 @@
-"use client"
+import { currentRole } from "@/lib/portfolio";
+import Reveal from "./reveal";
+import TechTags from "./tech-tags";
 
-import { motion } from "framer-motion"
-import type { ComponentType } from "react"
-import { DiMsqlServer } from "react-icons/di"
-import { SiCplusplus, SiMongodb, SiNestjs, SiNodedotjs, SiQt, SiReact, SiVite } from "react-icons/si"
-
-type TechIcon = ComponentType<{ className?: string }>
-
-const experiences: Array<{
-  title: string
-  company: string
-  period: string
-  technologies: Array<{ name: string; icon: TechIcon }>
-  achievements: string[]
-}> = [
+const experiences = [
   {
-    title: "Desenvolvedor Full-Stack Junior",
+    title: currentRole.title,
+    company: currentRole.company,
+    period: currentRole.period,
+    current: true,
+    technologies: currentRole.technologies,
+    achievements: [currentRole.description],
+  },
+  {
+    title: "Desenvolvedor Full Stack Júnior",
     company: "Epicora",
-    period: "07/2025 — 07/2026",
-    technologies: [
-      { name: "Nest.js", icon: SiNestjs },
-      { name: "React", icon: SiReact },
-      { name: "Vite", icon: SiVite },
-      { name: "Node.js", icon: SiNodedotjs },
-      { name: "MongoDB", icon: SiMongodb },
-    ],
+    period: "Jul 2025 — jul 2026",
+    technologies: ["NestJS", "React", "Node.js", "MongoDB"],
     achievements: [
-      "Desenvolvimento de APIs RESTful utilizando Nest.js e Node.js.",
-      "Criação de interfaces modernas e responsivas com React e Vite.",
-      "Implementação de autenticação e autorização com JWT.",
-      "Integração completa entre front-end e back-end.",
-      "Criação de testes unitários e de integração para garantir a qualidade do código.",
+      "Desenvolvimento de APIs REST, interfaces responsivas e integrações entre front-end e back-end.",
+      "Autenticação com JWT e testes unitários e de integração.",
     ],
   },
   {
-    title: "Desenvolvedor de Software Junior",
+    title: "Desenvolvedor de Software Júnior",
     company: "Gamatec",
-    period: "11/2024 — 07/2025",
-    technologies: [
-      { name: "Qt", icon: SiQt },
-      { name: "C++", icon: SiCplusplus },
-      { name: "React", icon: SiReact },
-      { name: "Node.js", icon: SiNodedotjs },
-      { name: "SQL Server", icon: DiMsqlServer },
-    ],
+    period: "Nov 2024 — jul 2025",
+    technologies: ["C++", "Qt", "React", "SQL Server"],
     achievements: [
-      "Desenvolvimento de aplicações de força de vendas multiplataforma com C++ e Qt.",
-      "Manutenção e criação de funcionalidades em sistemas web utilizando React e Node.js.",
-      "Otimização de queries e performance em SQL Server com grande volume de dados.",
-      "Colaboração com equipe de QA e analistas para garantir qualidade nas entregas.",
+      "Aplicações de força de vendas multiplataforma e evolução de sistemas web.",
+      "Otimização de consultas SQL e colaboração com QA e analistas.",
     ],
   },
   {
     title: "Assistente de Programação",
     company: "Gamatec",
-    period: "08/2023 — 11/2024",
-    technologies: [
-      { name: "C++", icon: SiCplusplus },
-      { name: "Qt", icon: SiQt },
-      { name: "SQL Server", icon: DiMsqlServer },
-    ],
+    period: "Ago 2023 — nov 2024",
+    technologies: ["C++", "Qt", "SQL Server"],
     achievements: [
-      "Desenvolvimento de aplicações desktop para automação comercial usando C++ e Qt.",
-      "Criação de scripts SQL otimizados para consultas e relatórios gerenciais.",
-      "Apoio na documentação técnica e nos testes de novas funcionalidades.",
+      "Aplicações desktop para automação comercial, relatórios e scripts SQL.",
+      "Apoio à documentação técnica e aos testes de funcionalidades.",
     ],
   },
   {
     title: "Assistente Administrativo",
     company: "Vértice",
-    period: "06/2022 — 02/2023",
+    period: "Jun 2022 — fev 2023",
     technologies: [],
     achievements: [
-      "Controle de notas fiscais, contas a pagar e receber e relatórios financeiros.",
-      "Otimização de rotinas administrativas com planilhas e sistemas de gestão.",
-      "Organização documental e suporte ao setor contábil e financeiro.",
+      "Rotinas financeiras, relatórios e organização documental, com apoio de planilhas e sistemas de gestão.",
     ],
   },
-]
+];
 
 export default function Experience() {
   return (
-    <section id="experience" className="section-padding bg-ivory">
-      <div className="container-section">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-14 grid gap-6 lg:grid-cols-2 lg:items-end"
-        >
-          <div>
-            <p className="eyebrow text-fern">Experiência</p>
-            <h2 className="heading-lg max-w-xl text-navy">Uma trajetória construída na prática.</h2>
-          </div>
-          <p className="max-w-lg leading-relaxed text-navy/60 lg:justify-self-end">
-            Produtos web, aplicações desktop, APIs e bancos de dados: experiências diferentes com o mesmo compromisso
-            com qualidade e evolução contínua.
+    <section
+      id="experience"
+      className="section-padding experience-section"
+      aria-labelledby="experience-title"
+    >
+      <div className="container-section experience-layout">
+        <div className="experience-heading">
+          <p className="section-label">Minha trajetória</p>
+          <h2 id="experience-title" className="heading-lg">
+            Experiência que <br />
+            vira repertório.
+          </h2>
+          <p>
+            Cada equipe, cada plataforma e cada desafio deixaram algo no meu
+            jeito de construir software.
           </p>
-        </motion.div>
-
-        <div className="border-t border-navy/15">
-          {experiences.map((experience, index) => (
-            <motion.article
+        </div>
+        <ol className="timeline">
+          {experiences.map((experience) => (
+            <li
               key={`${experience.company}-${experience.period}`}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.06 }}
-              className="grid gap-7 border-b border-navy/15 py-10 lg:grid-cols-[0.32fr_0.68fr] lg:gap-14"
+              className={experience.current ? "timeline-current" : ""}
             >
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-gold">{experience.period}</p>
-                <p className="mt-3 text-lg font-semibold text-forest">{experience.company}</p>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-semibold tracking-tight text-navy md:text-3xl">{experience.title}</h3>
-
-                {experience.technologies.length > 0 && (
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {experience.technologies.map(({ name, icon: Icon }) => (
-                      <span
-                        key={name}
-                        className="inline-flex items-center gap-2 rounded-full border border-forest/20 px-3 py-1.5 text-xs font-semibold text-forest"
-                      >
-                        <Icon className="h-4 w-4" />
-                        {name}
+              <Reveal>
+                <article>
+                  <div className="timeline-meta">
+                    <p>{experience.period}</p>
+                    {experience.current && (
+                      <span className="current-label">
+                        <span className="status-dot" />
+                        Cargo atual
                       </span>
+                    )}
+                  </div>
+                  <p className="timeline-company">{experience.company}</p>
+                  <h3>{experience.title}</h3>
+                  {experience.current && (
+                    <p className="timeline-start">
+                      Desde{" "}
+                      <time dateTime={currentRole.startDate}>
+                        1º de setembro de 2026
+                      </time>
+                    </p>
+                  )}
+                  <div className="timeline-description">
+                    {experience.achievements.map((achievement) => (
+                      <p key={achievement}>{achievement}</p>
                     ))}
                   </div>
-                )}
-
-                <ul className="mt-7 grid gap-3 md:grid-cols-2">
-                  {experience.achievements.map((achievement) => (
-                    <li key={achievement} className="flex items-start gap-3 text-sm leading-relaxed text-navy/60">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
-                      {achievement}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.article>
+                  {experience.technologies.length > 0 && (
+                    <TechTags technologies={experience.technologies} />
+                  )}
+                </article>
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss"
-import animate from "tailwindcss-animate"
+import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 const config: Config = {
   content: [
@@ -10,17 +10,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#1A2744",
-        foreground: "#F5F0E6",
-        accent: "#C9A86C",
-        forest: "#1A3D1A",
-        fern: "#2D5A3D",
-        ivory: "#F5F0E6",
-        gold: "#C9A86C",
-        navy: "#1A2744",
+        background: "#F5F6FA",
+        foreground: "#151C31",
+        accent: "#151C31",
+        forest: "#151C31",
+        fern: "#626B80",
+        ivory: "#F5F6FA",
+        gold: "#DCE4F4",
+        navy: "#151C31",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out forwards",
@@ -39,6 +39,6 @@ const config: Config = {
     },
   },
   plugins: [animate],
-}
+};
 
-export default config
+export default config;

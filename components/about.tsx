@@ -1,99 +1,70 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { Code2, Heart, Users, Zap } from "lucide-react"
-
-const values = [
-  {
-    icon: Code2,
-    title: "Código limpo",
-    description: "Soluções legíveis, consistentes e fáceis de evoluir.",
-  },
-  {
-    icon: Zap,
-    title: "Performance",
-    description: "Aplicações rápidas, eficientes e preparadas para crescer.",
-  },
-  {
-    icon: Heart,
-    title: "Segurança",
-    description: "Proteção de dados e boas práticas desde a primeira linha.",
-  },
-  {
-    icon: Users,
-    title: "Colaboração",
-    description: "Comunicação clara para transformar objetivos em entregas.",
-  },
-]
+import { ArrowUpRight, Blocks, Code2, Database } from "lucide-react";
+import Reveal from "./reveal";
+import { currentRole } from "@/lib/portfolio";
 
 export default function About() {
   return (
-    <section id="about" className="section-padding bg-forest text-ivory">
+    <section
+      id="about"
+      className="section-padding about-section"
+      aria-labelledby="about-title"
+    >
       <div className="container-section">
-        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <p className="eyebrow text-gold">Sobre mim</p>
-            <h2 className="heading-lg max-w-md">Um pouco do caminho até aqui.</h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-6 text-lg leading-relaxed text-ivory/70"
-          >
+        <Reveal className="about-grid">
+          <div>
+            <p className="section-label">Um pouco sobre mim</p>
+            <h2 id="about-title" className="heading-lg">
+              Curiosidade para entender.
+              <br />
+              Código para resolver.
+            </h2>
+          </div>
+          <div className="about-copy">
             <p>
-              Hoje trabalho como desenvolvedor Full Stack, principalmente com Node.js, NestJS e React. Minha
-              experiência também passa por C++, Qt, SQL Server e aplicações desktop.
+              Minha trajetória começou no desenvolvimento de aplicações desktop
+              com C++, Qt e SQL Server. Com o tempo, passei a construir também
+              produtos web com Node.js, NestJS e React.
             </p>
             <p>
-              Ainda tenho bastante para aprender. Gosto de entender o problema, testar ideias e melhorar o que faço
-              a cada projeto e a cada entrega.
+              Hoje faço parte da {currentRole.company}. Gosto de trabalhar perto
+              do problema, trocar ideias com a equipe e encontrar soluções
+              simples de manter e evoluir.
             </p>
-          </motion.div>
-        </div>
-
-        <div className="mt-16 grid border-y border-ivory/15 sm:grid-cols-3">
+            <a className="text-link" href="#experience">
+              Minha trajetória
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </div>
+        </Reveal>
+        <div className="practice-grid">
           {[
-            ["2+", "Anos de experiência"],
-            ["10+", "Projetos concluídos"],
-            ["5+", "Tecnologias principais"],
-          ].map(([number, label], index) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              className="border-b border-ivory/15 py-8 last:border-b-0 sm:border-b-0 sm:border-r sm:px-8 sm:last:border-r-0 sm:first:pl-0"
-            >
-              <p className="text-4xl font-semibold text-gold">{number}</p>
-              <p className="mt-2 text-sm text-ivory/60">{label}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-ivory/15 bg-ivory/15 md:grid-cols-2 lg:grid-cols-4">
-          {values.map((value, index) => (
-            <motion.article
-              key={value.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-              className="bg-forest p-7 transition-colors hover:bg-fern"
-            >
-              <value.icon className="h-6 w-6 text-gold" />
-              <h3 className="mt-8 text-lg font-semibold">{value.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ivory/60">{value.description}</p>
-            </motion.article>
+            {
+              icon: Database,
+              title: "Da regra ao dado",
+              description:
+                "APIs, integrações e bancos de dados pensados para o mundo real.",
+            },
+            {
+              icon: Blocks,
+              title: "Do desktop à web",
+              description:
+                "Experiência em diferentes plataformas para escolher o que faz sentido.",
+            },
+            {
+              icon: Code2,
+              title: "Sempre em evolução",
+              description:
+                "Aprender, testar e refinar fazem parte de cada projeto.",
+            },
+          ].map(({ icon: Icon, title, description }, index) => (
+            <Reveal key={title} delay={index * 60} className="practice-item">
+              <Icon size={24} strokeWidth={1.5} aria-hidden="true" />
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

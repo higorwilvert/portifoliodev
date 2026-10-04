@@ -1,81 +1,141 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import { Component, type ReactNode } from "react"
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { Hand } from "lucide-react";
+import { useInView } from "framer-motion";
+import { Component, useEffect, useRef, useState, type ReactNode } from "react";
+import { currentRole } from "@/lib/portfolio";
+
+const badgeProfile = {
+  name: "Higor Mueller",
+  role: currentRole.title,
+  detail: `${currentRole.company} • Full Stack`,
+  mark: "HW / PORTFOLIO",
+};
 
 const DynamicLanyard = dynamic(() => import("./Lanyard"), {
   ssr: false,
   loading: () => <LanyardLoader />,
-})
+});
 
 function LanyardLoader() {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center text-forest" role="status" aria-live="polite">
-      <div className="h-24 w-px bg-forest/25" />
-      <div className="mt-[-1px] h-28 w-20 animate-pulse rounded-xl border border-forest/20 bg-forest/5" />
-      <span className="mt-4 text-[10px] font-bold uppercase tracking-[0.16em] text-forest/55">Carregando crachá 3D</span>
+    <div className="badge-loader" role="status">
+      <div className="badge-loader-line" />
+      <div className="badge-loader-card" />
+      <span>Preparando seu crachá…</span>
     </div>
-  )
+  );
 }
 
 function BadgeFallback() {
   return (
-    <div className="relative mx-auto aspect-[5/7] w-[min(74vw,280px)] overflow-hidden rounded-[1.75rem] border border-navy/15 bg-ivory shadow-[0_24px_70px_rgba(26,39,68,0.16)] lg:w-[300px]">
-      <div className="flex h-[11%] items-center justify-between border-b-4 border-gold bg-forest px-5 text-[10px] font-bold uppercase tracking-[0.16em] text-ivory">
+    <div className="badge-static">
+      <div className="badge-static-header">
         <span>HW / Portfolio</span>
-        <span className="text-gold">2026</span>
+        <span>Full Stack</span>
       </div>
-      <div className="relative h-[55%] bg-navy">
-        <Image src="/euu.jpg" alt="Higor Wilvert" fill sizes="300px" className="object-cover object-center" priority />
+      <div className="badge-static-photo">
+        <Image
+          src="/euu.jpg"
+          alt="Higor Mueller"
+          fill
+          sizes="246px"
+          className="object-cover object-center"
+        />
       </div>
-      <div className="border-t-4 border-gold px-5 py-5">
-        <p className="text-xl font-bold tracking-tight text-navy">HIGOR WILVERT</p>
-        <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-forest">Desenvolvedor Full Stack</p>
-        <p className="mt-3 text-[11px] text-navy/55">Node.js • React • C++</p>
+      <div className="badge-static-info">
+        <h2>{badgeProfile.name}</h2>
+        <p>{badgeProfile.role}</p>
+        <span>{badgeProfile.detail}</span>
       </div>
     </div>
-  )
+  );
 }
 
-class LanyardBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
-  state = { failed: false }
-
+class LanyardBoundary extends Component<
+  { children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
   static getDerivedStateFromError() {
-    return { failed: true }
+    return { failed: true };
   }
-
   componentDidCatch(error: Error) {
-    console.error("Falha ao renderizar o Lanyard 3D:", error)
+    console.error("Não foi possível exibir o crachá 3D:", error);
   }
-
   render() {
-    return this.state.failed ? <BadgeFallback /> : this.props.children
+    return this.state.failed ? <BadgeFallback /> : this.props.children;
   }
 }
 
 export default function HeroLanyard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "100px" });
+  const [mode, setMode] = useState<"loading" | "static" | "interactive">(
+    "loading",
+  );
+  const [visible, setVisible] = useState(true);
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobile = window.matchMedia("(max-width: 767px)");
+    const updateSize = () => setCompact(mobile.matches);
+    const updateMode = () =>
+      setMode(
+        preference.matches || !("WebGLRenderingContext" in window)
+          ? "static"
+          : "interactive",
+      );
+    const updateVisibility = () => setVisible(!document.hidden);
+    updateSize();
+    updateMode();
+    updateVisibility();
+    preference.addEventListener("change", updateMode);
+    mobile.addEventListener("change", updateSize);
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () => {
+      preference.removeEventListener("change", updateMode);
+      mobile.removeEventListener("change", updateSize);
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
+  }, []);
+
   return (
-    <div className="relative flex h-[360px] w-full min-w-0 items-center justify-center overflow-hidden sm:h-[460px] md:h-[540px] lg:h-[590px] xl:h-[630px]">
-      <LanyardBoundary>
-        <DynamicLanyard
-          position={[0, 0.1, 18]}
-          gravity={[0, -28, 0]}
-          fov={20}
-          frontImage="/euu.jpg"
-          lanyardImage="/lanyard/band.svg?v=2"
-          lanyardWidth={1.25}
-          cardScale={3.8}
-          ropeLength={0.58}
-          anchorPosition={[0, 3.15, 0]}
-          badgeProfile={{
-            name: "Higor Wilvert",
-            role: "Desenvolvedor Full Stack",
-            detail: "Node.js • React • C++",
-            mark: "HW / PORTFOLIO",
-          }}
-        />
-      </LanyardBoundary>
+    <div ref={ref} className="lanyard-container">
+      {mode === "loading" ? (
+        <LanyardLoader />
+      ) : mode === "static" ? (
+        <BadgeFallback />
+      ) : (
+        <LanyardBoundary>
+          <DynamicLanyard
+            key={compact ? "mobile" : "desktop"}
+            position={compact ? [0, -0.45, 12] : [0, -0.65, 18]}
+            gravity={[0, -28, 0]}
+            fov={22}
+            frontImage="/euu.jpg"
+            lanyardImage="/lanyard/band.svg?v=4"
+            lanyardWidth={compact ? 0.85 : 1.25}
+            cardScale={compact ? 3.2 : 3.8}
+            ropeLength={compact ? 0.22 : 0.58}
+            anchorPosition={compact ? [0, 2.3, 0] : [0, 3.15, 0]}
+            badgeProfile={badgeProfile}
+            active={inView && visible}
+          />
+          <p className="badge-instruction">
+            <Hand size={13} aria-hidden="true" />
+            <span className="badge-pointer-hint">
+              Pode arrastar. O crachá é interativo.
+            </span>
+            <span className="badge-touch-hint">
+              Meu crachá, em movimento.
+            </span>
+          </p>
+        </LanyardBoundary>
+      )}
     </div>
-  )
+  );
 }

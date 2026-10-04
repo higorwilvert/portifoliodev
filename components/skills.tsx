@@ -1,141 +1,112 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { Code2, Database, Wrench } from "lucide-react"
-import type { ComponentType } from "react"
-import { FaDatabase } from "react-icons/fa"
+import type { ComponentType } from "react";
+import { DiMsqlServer } from "react-icons/di";
 import {
-  SiCss3,
+  SiCplusplus,
   SiFigma,
-  SiGimp,
   SiGit,
   SiGithub,
-  SiHtml5,
-  SiInsomnia,
   SiJavascript,
   SiLinux,
-  SiMysql,
+  SiMongodb,
+  SiNestjs,
   SiNextdotjs,
   SiNodedotjs,
-  SiOracle,
   SiPostgresql,
-  SiPostman,
   SiPrisma,
+  SiQt,
   SiReact,
-  SiSequelize,
-  SiShadcnui,
   SiSwift,
   SiTailwindcss,
-} from "react-icons/si"
+  SiTypescript,
+} from "react-icons/si";
+import Reveal from "./reveal";
 
-type SkillIcon = ComponentType<{ className?: string }>
-
-const skills: Array<{
-  title: string
-  description: string
-  icon: SkillIcon
-  items: Array<{ name: string; icon: SkillIcon }>
-}> = [
+type Icon = ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
+const categories: {
+  title: string;
+  description: string;
+  items: { name: string; icon: Icon }[];
+}[] = [
   {
-    title: "Back-End",
-    description: "APIs, regras de negócio e dados.",
-    icon: Database,
+    title: "Back-End & dados",
+    description: "A lógica por trás de tudo.",
     items: [
       { name: "Node.js", icon: SiNodedotjs },
-      { name: "Sequelize", icon: SiSequelize },
+      { name: "NestJS", icon: SiNestjs },
       { name: "PostgreSQL", icon: SiPostgresql },
-      { name: "MySQL", icon: SiMysql },
-      { name: "Oracle", icon: SiOracle },
+      { name: "SQL Server", icon: DiMsqlServer },
+      { name: "MongoDB", icon: SiMongodb },
       { name: "Prisma", icon: SiPrisma },
-      { name: "Postman", icon: SiPostman },
-      { name: "REST API", icon: FaDatabase },
     ],
   },
   {
-    title: "Front-End",
-    description: "Interfaces responsivas e acessíveis.",
-    icon: Code2,
+    title: "Interfaces & aplicações",
+    description: "Onde a experiência acontece.",
     items: [
       { name: "React", icon: SiReact },
       { name: "Next.js", icon: SiNextdotjs },
+      { name: "TypeScript", icon: SiTypescript },
       { name: "JavaScript", icon: SiJavascript },
-      { name: "HTML5", icon: SiHtml5 },
-      { name: "CSS3", icon: SiCss3 },
-      { name: "TailwindCSS", icon: SiTailwindcss },
-      { name: "Shadcn", icon: SiShadcnui },
+      { name: "Tailwind CSS", icon: SiTailwindcss },
+      { name: "C++", icon: SiCplusplus },
+      { name: "Qt", icon: SiQt },
       { name: "Swift", icon: SiSwift },
     ],
   },
   {
     title: "Ferramentas",
-    description: "Fluxo, prototipação e qualidade.",
-    icon: Wrench,
+    description: "Do primeiro esboço à entrega.",
     items: [
       { name: "Git", icon: SiGit },
       { name: "GitHub", icon: SiGithub },
       { name: "Linux", icon: SiLinux },
-      { name: "Insomnia", icon: SiInsomnia },
       { name: "Figma", icon: SiFigma },
-      { name: "Gimp", icon: SiGimp },
     ],
   },
-]
+];
 
-export default function SkillsGrid() {
+export default function Skills() {
   return (
-    <section id="skills" className="section-padding bg-navy text-ivory">
+    <section
+      id="skills"
+      className="section-padding skills-section"
+      aria-labelledby="skills-title"
+    >
       <div className="container-section">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="grid gap-8 border-b border-ivory/15 pb-10 lg:grid-cols-2 lg:items-end"
-        >
+        <Reveal className="skills-heading">
           <div>
-            <p className="eyebrow text-gold">Stack & ferramentas</p>
-            <h2 className="heading-lg">Tecnologia escolhida com propósito.</h2>
+            <p className="section-label">Minha caixa de ferramentas</p>
+            <h2 id="skills-title" className="heading-lg">
+              A stack muda.
+              <br />O cuidado permanece.
+            </h2>
           </div>
-          <p className="max-w-lg leading-relaxed text-ivory/60 lg:justify-self-end">
-            Minha base técnica combina desenvolvimento Back-End, interfaces modernas e ferramentas que mantêm o fluxo
-            de trabalho simples e confiável.
+          <p>
+            Escolho as ferramentas a partir do problema. Estas são algumas das
+            tecnologias que fazem parte do meu trabalho e dos meus projetos.
           </p>
-        </motion.div>
-
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {skills.map((category, categoryIndex) => (
-            <motion.article
-              key={category.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: categoryIndex * 0.08 }}
-              className="rounded-3xl border border-ivory/15 p-7 transition-colors hover:border-gold/50"
-            >
-              <div className="flex items-start justify-between">
+        </Reveal>
+        <div className="skills-rows">
+          {categories.map((category) => (
+            <Reveal key={category.title}>
+              <div className="skill-row">
                 <div>
-                  <h3 className="text-2xl font-semibold">{category.title}</h3>
-                  <p className="mt-2 text-sm text-ivory/50">{category.description}</p>
+                  <h3>{category.title}</h3>
+                  <p>{category.description}</p>
                 </div>
-                <div className="rounded-full bg-gold p-3 text-navy">
-                  <category.icon className="h-5 w-5" />
-                </div>
+                <ul className="skill-items">
+                  {category.items.map(({ name, icon: TechIcon }) => (
+                    <li key={name}>
+                      <TechIcon aria-hidden={true} />
+                      <span>{name}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-
-              <div className="mt-8 grid grid-cols-2 gap-2">
-                {category.items.map(({ name, icon: Icon }) => (
-                  <div
-                    key={name}
-                    className="flex items-center gap-2 rounded-xl bg-ivory/5 px-3 py-3 text-sm text-ivory/75"
-                  >
-                    <Icon className="h-4 w-4 shrink-0 text-gold" />
-                    <span>{name}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.article>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

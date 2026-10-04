@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240">
-  <rect width="1200" height="240" fill="#1a3d1a"/>
-  <rect y="0" width="1200" height="22" fill="#c9a86c"/>
-  <rect y="218" width="1200" height="22" fill="#c9a86c"/>
-  <g fill="#f5f0e6" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700" letter-spacing="10">
+  <rect width="1200" height="240" fill="#151c31"/>
+  <rect y="0" width="1200" height="22" fill="#dce4f4"/>
+  <rect y="218" width="1200" height="22" fill="#dce4f4"/>
+  <g fill="#f5f6fa" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700" letter-spacing="10">
     <text x="64" y="145">HW / PORTFOLIO</text>
-    <text x="900" y="145" fill="#c9a86c">2026</text>
+    <text x="900" y="145" fill="#dce4f4">2026</text>
   </g>
 </svg>
